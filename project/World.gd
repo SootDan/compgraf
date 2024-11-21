@@ -5,14 +5,15 @@ extends Node3D
 @onready var bubbles_anim := $bubbles/anim
 @export var dupes := 9
 
+
 func _ready():
 	for flower in range(dupes):
 		var instance := skyflower.duplicate()
 		instance.name = "Flower" + str(flower)
 		instance.position = Vector3(
-			randf_range(-500, 500),
+			randf_range(-1000, 1000),
 			randf_range(0, skyflower.position.y + 100),
-			randf_range(skyflower.position.z - 250, -100)
+			randf_range(skyflower.position.z - 100, -100)
 		)
 		instance.rotation.x = randf_range(0, 180)
 		skyflower_color(instance)
