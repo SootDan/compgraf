@@ -1,25 +1,31 @@
-[gd_scene load_steps=13 format=3 uid="uid://de2wxdipqwx6s"]
+[gd_scene load_steps=17 format=3 uid="uid://de2wxdipqwx6s"]
 
+[ext_resource type="Script" path="res://World.gd" id="1_43mkm"]
 [ext_resource type="PackedScene" uid="uid://p2mkvkxicqv2" path="res://squidwards_house.blend" id="1_hv1le"]
+[ext_resource type="PackedScene" uid="uid://dbl7hq8jo6mjy" path="res://skyflower.blend" id="1_rfiqd"]
+[ext_resource type="PackedScene" uid="uid://d3ou7b6p2uc0x" path="res://neighborhood_path.blend" id="2_mrmmq"]
 [ext_resource type="PackedScene" uid="uid://mdejk2uh33ge" path="res://patricks_house.blend" id="2_sv8oa"]
 [ext_resource type="PackedScene" uid="uid://y2m4it67vbyi" path="res://spongebob_house.blend" id="3_1qsw2"]
 [ext_resource type="Script" path="res://Player.gd" id="3_nhbas"]
 [ext_resource type="PackedScene" uid="uid://cc16sq2xhsje2" path="res://patrick.blend" id="5_feunb"]
+[ext_resource type="AudioStream" uid="uid://vh57fq6yqtd3" path="res://music.mp3" id="8_5da0m"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3r4yp"]
-energy_multiplier = 8.36
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4u5ka"]
+rayleigh_color = Color(0.055258, 0.0916459, 0.159626, 1)
+mie_color = Color(0.652509, 0.707738, 0.991465, 1)
+ground_color = Color(0.418216, 0.615782, 0.972575, 1)
+energy_multiplier = 22.33
 
 [sub_resource type="Sky" id="Sky_ka8hg"]
-sky_material = SubResource("ProceduralSkyMaterial_3r4yp")
+sky_material = SubResource("PhysicalSkyMaterial_4u5ka")
 
 [sub_resource type="Environment" id="Environment_awe1n"]
 background_mode = 2
-background_color = Color(0, 0.981682, 0.922033, 1)
-background_energy_multiplier = 0.1
+background_color = Color(0.107159, 0.294772, 0.94693, 1)
 sky = SubResource("Sky_ka8hg")
+ambient_light_source = 1
 ambient_light_color = Color(0.726837, 0.913029, 0.941993, 1)
-reflected_light_source = 2
-fog_enabled = true
+ambient_light_sky_contribution = 0.25
 fog_mode = 1
 fog_light_color = Color(0.603191, 0.739437, 0.988259, 1)
 fog_density = 0.0525
@@ -40,6 +46,13 @@ size = Vector2(4000, 4000)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t7tma"]
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_43mkm")
+
+[node name="neighborhood_path" parent="." instance=ExtResource("2_mrmmq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.029)
+
+[node name="skyflower" parent="." instance=ExtResource("1_rfiqd")]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 50, -100)
 
 [node name="squidwards_house" parent="." instance=ExtResource("1_hv1le")]
 transform = Transform3D(-1.5, 0, -2.26494e-07, 0, 1.5, 0, 2.26494e-07, 0, -1.5, 0, 4.5, 0)
@@ -55,12 +68,12 @@ environment = SubResource("Environment_awe1n")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(0.503832, 0.570527, -0.648577, -0.350003, 0.821279, 0.450555, 0.789716, 0, 0.613472, -12.1347, 15.2772, 0)
-light_color = Color(1, 0.976471, 0.976471, 1)
-light_energy = 0.5
+light_energy = 0.15
 light_angular_distance = 45.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 shadow_opacity = 0.5
+directional_shadow_mode = 0
 directional_shadow_split_1 = 0.52
 directional_shadow_split_2 = 0.604
 directional_shadow_blend_splits = true
@@ -90,3 +103,8 @@ transform = Transform3D(1.94707e-07, 0.258819, -0.965926, 0, 0.965926, 0.258819,
 keep_aspect = 0
 fov = 145.0
 size = 2.155
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5da0m")
+autoplay = true
+parameters/looping = false
